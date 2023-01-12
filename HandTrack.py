@@ -22,7 +22,8 @@ Przygotowanie środowiska:
 
 Uruchomienie oraz instrukcja:
     W celu sterowania wideo z platformy YouTube należy wybrać dowolny film na tej platformie oraz upewnić się że fokus
-    będzie na tym właśnie wideo np. kliknąć na wideo przed rozpoczęciem wykonywania gestów.
+    będzie na tym właśnie wideo np. kliknąć na wideo przed rozpoczęciem wykonywania gestów. Aby zakończyć program należy
+    nacisnąć "q".
 """
 import time
 import cv2
@@ -104,16 +105,16 @@ class handTrack():
     #Show subtitles
     def indexUp(self, lmlist):
         if len(lmlist) != 0:
-            thumb = lmlist[5][1]
-            index_y = lmlist[8][2]
+            thumb_x = lmlist[4][1]
             index_x = lmlist[8][1]
+            index = lmlist[8][2]
             index_mid = lmlist[7][2]
             index_bot = lmlist[6][2]
-            middle = lmlist[12][1]
-            ring = lmlist[16][1]
-            pinky = lmlist[20][1]
+            middle_x = lmlist[12][1]
+            ring_x = lmlist[16][1]
+            pinky_x = lmlist[20][1]
 
-            if index_y < index_mid < index_bot and index_x > thumb and index_x > middle and index_x > ring and index_x > pinky:
+            if index < index_mid < index_bot and index_x > thumb_x and index_x > middle_x and index_x > ring_x and index_x > pinky_x:
                 keyboard.press_and_release('c')
                 time.sleep(2)
 
@@ -129,9 +130,6 @@ if __name__ == "__main__":
         tracker.thumbUp(lmList)
         tracker.openHand(lmList)
         tracker.indexUp(lmList)
-
-        if len(lmList) != 0:
-            print(lmList[4])
         cv2.imshow("Video", image)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
